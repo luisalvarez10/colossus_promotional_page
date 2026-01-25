@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charla: El Secreto de Colossus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0d10;
+            --accent-color: #00ff9d;
+            --text-main: #ffffff;
+            --text-secondary: #a0a0a8;
+            --card-bg: #1a1a20;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            /* Imagen de fondo sutil con estética de código/circuito */
+            background: linear-gradient(rgba(13, 13, 16, 0.8), rgba(13, 13, 16, 0.9)), 
+                        url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1500');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid #222;
+        }
+
+        .date-badge {
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--accent-color);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-family: 'Space Grotesk';
+            font-weight: 700;
+            margin-bottom: 25px;
+            border: 1px solid var(--accent-color);
+        }
+
+        h1 {
+            font-family: 'Space Grotesk';
+            font-size: clamp(2.2rem, 7vw, 4.5rem);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .highlight { color: var(--accent-color); }
+
+        .content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-family: 'Space Grotesk';
+            font-size: 2.5rem;
+        }
+
+        /* Estilo para las secciones con fotos */
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .feature:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .feature-img {
+            flex: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .feature-img img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(120%);
+            transition: filter 0.5s ease;
+        }
+
+        .feature-img img:hover {
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-text h3 {
+            font-family: 'Space Grotesk';
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .event-info {
+            background: #111116;
+            padding: 80px 20px;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        .info-box {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .info-unit p {
+            font-family: 'Space Grotesk';
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .feature { flex-direction: column !important; text-align: center; }
+            header { height: auto; padding: 100px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="date-badge">28 ENERO · 10:15</div>
+        <h1>DESCIFRANDO <span class="highlight">COLOSSUS</span></h1>
+        <p style="max-width: 600px; color: var(--text-secondary);">
+            Del bloqueo total en Bletchley Park a la creación de la "máquina fantasma" que descifró el alto mando alemán.
+        </p>
+    </header>
+
+    <section class="content">
+        
+        <div class="feature">
+            <div class="feature-img">
+                <img src="https://upload.wikimedia.org/wikipedia/en/0/05/W._T._Tutte.jpg" alt="Bill Tutte">
+            </div>
+            <div class="feature-text">
+                <h3>El Genio de Bill Tutte</h3>
+                <p>Con solo 25 años y sin haber visto jamás una máquina Lorenz, Tutte dedujo su funcionamiento analizando únicamente mensajes interceptados. Un hito de pura inteligencia matemática que permitió el nacimiento de Colossus.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-img">
+                <img src="https://ichef.bbci.co.uk/ace/ws/640/amz/worldservice/live/assets/images/2014/02/05/140205173827_colossus_464x261_bbc.jpg.webp" alt="Válvulas electrónicas">
+            </div>
+            <div class="feature-text">
+                <h3>La Visión de Tommy Flowers</h3>
+                <p>Frente a los engranajes mecánicos, Flowers propuso algo impensable: 2.500 válvulas electrónicas trabajando en armonía. Logró que la electricidad viajara a una velocidad inalcanzable para cualquier mecanismo físico.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-img">
+                <img src="https://blogthinkbig.com/wp-content/uploads/sites/4/2013/10/Colossus-Mark-II.jpg?resize=500%2C331" alt="Cinta perforada">
+            </div>
+            <div class="feature-text">
+                <h3>La Máquina Fantasma</h3>
+                <p>Colossus leía cintas de papel a 5.000 caracteres por segundo, comparándolos con una versión digital interna de la Lorenz. No adivinaba palabras; buscaba "grietas en el azar" mediante estadística pura.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="event-info">
+        <h2 class="section-title">Datos del Evento</h2>
+        <div class="info-box">
+            <div class="info-unit">
+                <span style="color: var(--accent-color)">FECHA</span>
+                <p>28 de Enero, 2026</p>
+            </div>
+            <div class="info-unit">
+                <span style="color: var(--accent-color)">HORA</span>
+                <p>10:15 AM</p>
+            </div>
+            <div class="info-unit">
+                <span style="color: var(--accent-color)">LUGAR</span>
+                <p>Salón de Actos</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
