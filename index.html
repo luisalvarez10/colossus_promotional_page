@@ -137,6 +137,34 @@
             font-weight: 700;
         }
 
+        .cta-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 35px;
+            background-color: transparent;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border: 2px solid var(--accent-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
         @media (max-width: 768px) {
             .feature { flex-direction: column !important; text-align: center; }
             header { height: auto; padding: 100px 20px; }
@@ -151,6 +179,7 @@
         <p style="max-width: 600px; color: var(--text-secondary);">
             Del bloqueo total en Bletchley Park a la creación de la "máquina fantasma" que descifró el alto mando alemán.
         </p>
+        <a href="html/colossus_simulator.html" class="cta-button">SIMULADOR MÁQUINA COLOSSUS</a>
     </header>
 
     <section class="content">
@@ -208,3 +237,4 @@
 </body>
 
 </html>
+
