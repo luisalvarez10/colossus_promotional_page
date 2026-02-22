@@ -165,6 +165,13 @@
             transform: translateY(-1px);
         }
 
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px; 
+            width: 100%;
+        }
+
         @media (max-width: 768px) {
             .feature { flex-direction: column !important; text-align: center; }
             header { height: auto; padding: 100px 20px; }
@@ -212,7 +219,9 @@
                 <p>Colossus leía cintas de papel a 5.000 caracteres por segundo, comparándolos con una versión digital interna de la Lorenz. No adivinaba palabras; buscaba "grietas en el azar" mediante estadística pura.</p>
             </div>
         </div>
-        <a href="html/colossus_simulator.html" class="cta-button">SIMULADOR MÁQUINA COLOSSUS</a>
+        <div class="button-wrapper">
+            <a href="html/colossus_simulator.html" class="cta-button">SIMULADOR MÁQUINA COLOSSUS</a>
+        </div>
 
     </section>
 
@@ -237,5 +246,6 @@
 </body>
 
 </html>
+
 
 
