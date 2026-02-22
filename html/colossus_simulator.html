@@ -1,1 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador Colossus</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap');
 
+    :root {
+        --bg-color: #0d0d10;
+        --accent-color: #00ff9d;
+        --text-main: #ffffff;
+        --text-secondary: #a0a0a8;
+        --card-bg: #1a1a20;
+        --neon-dim: rgba(0, 255, 157, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    #colossus-interface {
+        max-width: 1000px;
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 60px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.5rem;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .section {
+        margin-bottom: 50px;
+        padding: 30px;
+        border-left: 2px solid #333;
+        background: rgba(255,255,255,0.02);
+        transition: all 0.5s ease;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .section.active {
+        border-left-color: var(--accent-color);
+        background: var(--neon-dim);
+        box-shadow: -10px 0 20px rgba(0, 255, 157, 0.05);
+    }
+
+    .component-label {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 0.8rem;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .tape-stream {
+        background: #000;
+        height: 60px;
+        border-radius: 4px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Courier New', monospace;
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        border: 1px solid #222;
+        margin-bottom: 15px;
+    }
+
+    .logic-grid {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+        align-items: center;
+    }
+
+    .valves {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 6px;
+        flex-grow: 1;
+        padding: 15px;
+        background: #000;
+        border-radius: 4px;
+    }
+
+    .valve {
+        height: 25px;
+        background: #222;
+        border-radius: 2px;
+        transition: background 0.1s;
+    }
+
+    .valve.on {
+        background: var(--accent-color);
+        box-shadow: 0 0 12px var(--accent-color);
+    }
+
+    .meter-container {
+        min-width: 140px;
+        text-align: center;
+        background: #000;
+        padding: 20px;
+        border-radius: 4px;
+        border: 1px solid #333;
+    }
+
+    .meter-value {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        display: block;
+    }
+
+    .annotation {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        margin-top: 15px;
+    }
+
+    .annotation strong {
+        color: var(--text-main);
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    #status-log {
+        font-family: 'Courier New', monospace;
+        background: #000;
+        padding: 15px;
+        border-radius: 4px;
+        border: 1px solid #222;
+        color: var(--text-secondary);
+    }
+
+    button {
+        background: transparent;
+        color: var(--accent-color);
+        border: 1px solid var(--accent-color);
+        padding: 20px 40px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 30px;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+    }
+
+    button:hover {
+        background: var(--accent-color);
+        color: #000;
+        box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+    }
+
+    #final-message {
+        background: rgba(255, 215, 0, 0.1);
+        border: 1px solid gold;
+        color: gold;
+        padding: 25px;
+        margin-top: 30px;
+        border-radius: 4px;
+        font-family: 'Space Grotesk', sans-serif;
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        #colossus-interface { padding: 30px 20px; }
+        .logic-grid { flex-direction: column; }
+        .meter-container { width: 100%; }
+    }
+</style>
+</head>
+<body>
+
+<div id="colossus-interface">
+    <h1 style="color: var(--neon); text-align: center; margin-top: 0;">SISTEMA COLOSSUS MK II</h1>
+
+    <div id="step1" class="section">
+        <span class="component-label">Input: Células Fotoeléctricas</span>
+        <div class="tape-stream" id="tape">------------------------------</div>
+        <p class="annotation">
+            <strong>1. LA CINTA VOLADORA:</strong> Mientras los caracteres pasan a 5,000 por segundo, los "ojos" electrónicos los convierten en impulsos. No buscamos palabras, buscamos pulsos eléctricos.
+        </p>
+    </div>
+
+    <div id="step2" class="section">
+        <span class="component-label">Procesador: Máquina Fantasma (Válvulas)</span>
+        <div class="logic-grid">
+            <div class="valves" id="valve-rack"></div>
+            <div class="meter-container">
+                <span class="component-label">Coincidencia</span>
+                <span id="stat-percent" class="meter-value">0%</span>
+            </div>
+        </div>
+        <p class="annotation">
+            <strong>2. EL CÓMPUTO LÓGICO:</strong> Las válvulas de vacío comparan la cinta real con las que genera una "versión fantasma" de la máquina Lorenz. Cada vez que algo "encaja" se está más cerca del mensaje.
+        </p>
+    </div>
+
+    <div id="step3" class="section">
+        <span class="component-label">Salida: Impresora de Resultados</span>
+        <div id="status-log" style="font-size: 0.8rem; height: 40px;">SISTEMA IDLE...</div>
+        <p class="annotation">
+            <strong>3. LA GRIETA EN EL AZAR:</strong> Si la llave gira "un milímetro más", la estadística se dispara. Colossus detecta ese "click" y nos dice que hemos roto el cifrado del Alto Mando Alemán.
+        </p>
+    </div>
+
+    <button id="startBtn" onclick="runSimulation()">INICIAR DESCIFRADO</button>
+    <div id="final-message">MENSAJE DESCIFRADO: CONFIGURACIÓN RUEDAS LORENZ: 12-43-05-18</div>
+</div>
+
+<script>
+    const tape = document.getElementById('tape');
+    const statPercent = document.getElementById('stat-percent');
+    const valvesContainer = document.getElementById('valve-rack');
+    const statusLog = document.getElementById('status-log');
+    
+    // Generar válvulas
+    for(let i=0; i<40; i++) {
+        const v = document.createElement('div');
+        v.className = 'valve';
+        valvesContainer.appendChild(v);
+    }
+    const valves = document.querySelectorAll('.valve');
+
+    function runSimulation() {
+        document.getElementById('startBtn').style.display = 'none';
+        let progress = 0;
+        
+        const loop = setInterval(() => {
+            progress++;
+
+            // Dinámica de secciones
+            if(progress < 30) document.getElementById('step1').classList.add('active');
+            if(progress > 30 && progress < 70) document.getElementById('step2').classList.add('active');
+            if(progress > 70) document.getElementById('step3').classList.add('active');
+
+            // Efecto Cinta
+            tape.innerText = Array(40).fill(0).map(() => "•/X-Z01"[Math.floor(Math.random()*7)]).join("");
+
+            // Efecto Válvulas
+            valves.forEach(v => {
+                v.className = Math.random() > 0.7 ? 'valve on' : 'valve';
+            });
+
+            // Estadística
+            let chance = Math.floor(Math.random() * 60) + (progress / 2.5);
+            statPercent.innerText = Math.min(Math.round(chance), 100) + "%";
+            
+            if(chance > 90) {
+                statusLog.innerText = "¡DETECTADO PATRÓN NO ALEATORIO EN RUEDA CHI-1!";
+                statusLog.style.color = "gold";
+            } else {
+                statusLog.innerText = "COMPARANDO SECUENCIAS...";
+                statusLog.style.color = "#aaa";
+            }
+
+            if(progress > 100) {
+                clearInterval(loop);
+                statPercent.innerText = "98%";
+                statusLog.innerText = "ANÁLISIS COMPLETADO CON ÉXITO.";
+                document.getElementById('final-message').style.display = 'block';
+                document.querySelectorAll('.section').forEach(s => s.classList.add('active'));
+            }
+        }, 80);
+    }
+</script>
+
+</body>
+</html>
